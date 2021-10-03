@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 7
+      author: ignest
+      changes:
+        - createTable:
+               tableName: order_id_order_detail_id
+               columns:
+                 - column:
+                   constraints:
+                     nullable: false
+                     foreignKeyName: fk_order_id_order_detail_i_order
+                     references: order(id)
+                     name: order_id
+                     type: BIGINT
+                 - column:
+                     constraints:
+                       nullable: false
+                       foreignKeyName: fk_order_id_order_detail_i_order_detail
+                       references: order_detail(id)
+                     name: order_detail_id
+                     type: BIGINT
+                 - column:
+        - createSequence:
+            cacheSize: 1
+            cycle: false
+            dataType: bigint
+            incrementBy: 1
+            maxValue: 9223372036854775807
+            minValue: 1
+            sequenceName: order_id_order_detail_id_sq
+            startValue: 3
