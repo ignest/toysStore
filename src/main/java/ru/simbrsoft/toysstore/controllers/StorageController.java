@@ -17,23 +17,17 @@ public class StorageController {
     private StorageService storageService;
 
     @GetMapping("")
-    public String getAds() throws JsonProcessingException {
-        List<Storage> listStorages = storageService.listAll();
-        ObjectMapper mapper = new ObjectMapper();
-        String storages = mapper.writeValueAsString(listStorages);
-        return storages;
+    public List<Storage> getStorages() throws JsonProcessingException {
+        return storageService.listAll();
     }
 
     @GetMapping("/get/")
-    public String getStorage(@Param("id") Long id) throws JsonProcessingException {
-        Storage storage = storageService.get(id);
-        ObjectMapper mapper = new ObjectMapper();
-        String storageStr= mapper.writeValueAsString(storage);
-        return storageStr;
+    public Storage getStorage(@Param("id") Long id) throws JsonProcessingException {
+        return storageService.get(id);
     }
 
     @DeleteMapping("/del/")
-    public boolean deleteAd( @Param("id") Long id) {
+    public boolean deleteStorage(@Param("id") Long id) {
         storageService.delete(id);
         return true;
     }
@@ -44,9 +38,7 @@ public class StorageController {
     }
 
     @GetMapping("/upd/")
-    public void updStorageById(String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Storage storage = mapper.readValue(json,Storage.class);
+    public void updStorageById(Storage storage) throws JsonProcessingException {
         storageService.save(storage);
     }
 

@@ -17,19 +17,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("")
-    public String getAds() throws JsonProcessingException {
-        List<User> listUsers = userService.listAll();
-        ObjectMapper mapper = new ObjectMapper();
-        String users = mapper.writeValueAsString(listUsers);
-        return users;
+    public List<User> getUsers() throws JsonProcessingException {
+        return userService.listAll();
     }
 
     @GetMapping("/get/")
-    public String getUser(@Param("id") Long id) throws JsonProcessingException {
-        User user = userService.get(id);
-        ObjectMapper mapper = new ObjectMapper();
-        String userStr= mapper.writeValueAsString(user);
-        return userStr;
+    public User getUser(@Param("id") Long id) throws JsonProcessingException {
+        return userService.get(id);
     }
 
     @DeleteMapping("/del/")
@@ -39,14 +33,12 @@ public class UserController {
     }
 
     @PostMapping("/add/")
-    public void addUserById(@RequestBody User user) {
+    public void addUserById(@RequestBody User user) throws JsonProcessingException {
         userService.save(user);
     }
 
     @GetMapping("/upd/")
-    public void updUserById(String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        User user = mapper.readValue(json,User.class);
+    public void updUserById(User user) throws JsonProcessingException {
         userService.save(user);
     }
 

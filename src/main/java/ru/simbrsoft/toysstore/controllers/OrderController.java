@@ -1,7 +1,6 @@
 package ru.simbrsoft.toysstore.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -17,19 +16,13 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("")
-    public String getAds() throws JsonProcessingException {
-        List<Order> listOrders = orderService.listAll();
-        ObjectMapper mapper = new ObjectMapper();
-        String orders = mapper.writeValueAsString(listOrders);
-        return orders;
+    public List<Order> getAds() throws JsonProcessingException {
+        return orderService.listAll();
     }
 
     @GetMapping("/get/")
-    public String getOrder(@Param("id") Long id) throws JsonProcessingException {
-        Order order = orderService.get(id);
-        ObjectMapper mapper = new ObjectMapper();
-        String orderStr= mapper.writeValueAsString(order);
-        return orderStr;
+    public Order getOrder(@Param("id") Long id) throws JsonProcessingException {
+        return orderService.get(id);
     }
 
     @DeleteMapping("/del/")
@@ -44,9 +37,7 @@ public class OrderController {
     }
 
     @GetMapping("/upd/")
-    public void updOrderById(String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Order order = mapper.readValue(json,Order.class);
+    public void updOrderById(Order order) throws JsonProcessingException {
         orderService.save(order);
     }
 

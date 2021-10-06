@@ -11,43 +11,35 @@ import ru.simbrsoft.toysstore.service.ItemCategoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/itenCategoriess")
+@RequestMapping("/itemCategoriess")
 public class ItemCategoryController {
     @Autowired
-    private ItemCategoryService itenCategoriesService;
+    private ItemCategoryService itemCategoriesService;
 
     @GetMapping("")
-    public String getAds() throws JsonProcessingException {
-        List<ItemCategory> listItemCategorys = itenCategoriesService.listAll();
-        ObjectMapper mapper = new ObjectMapper();
-        String itenCategoriess = mapper.writeValueAsString(listItemCategorys);
-        return itenCategoriess;
+    public List<ItemCategory> getItemCategories(){
+        return itemCategoriesService.listAll();
     }
 
     @GetMapping("/get/")
-    public String getItemCategory(@Param("id") Long id) throws JsonProcessingException {
-        ItemCategory itenCategories = itenCategoriesService.get(id);
-        ObjectMapper mapper = new ObjectMapper();
-        String itenCategoriesStr= mapper.writeValueAsString(itenCategories);
-        return itenCategoriesStr;
+    public ItemCategory getItemCategory(@Param("id") Long id) throws JsonProcessingException {
+        return itemCategoriesService.get(id);
     }
 
     @DeleteMapping("/del/")
-    public boolean deleteAd( @Param("id") Long id) {
-        itenCategoriesService.delete(id);
+    public boolean deleteItemCategory( @Param("id") Long id) {
+        itemCategoriesService.delete(id);
         return true;
     }
 
     @PostMapping("/add/")
     public void addItemCategoryById(@RequestBody ItemCategory itenCategories) {
-        itenCategoriesService.save(itenCategories);
+        itemCategoriesService.save(itenCategories);
     }
 
     @GetMapping("/upd/")
-    public void updItemCategoryById(String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        ItemCategory itenCategories = mapper.readValue(json,ItemCategory.class);
-        itenCategoriesService.save(itenCategories);
+    public void updItemCategoryById(ItemCategory itemCategories) throws JsonProcessingException {
+        itemCategoriesService.save(itemCategories);
     }
 
 }

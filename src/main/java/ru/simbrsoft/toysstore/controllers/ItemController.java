@@ -17,23 +17,17 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping("")
-    public String getAds() throws JsonProcessingException {
-        List<Item> listItems = itemService.listAll();
-        ObjectMapper mapper = new ObjectMapper();
-        String items = mapper.writeValueAsString(listItems);
-        return items;
+    public List<Item> getAds() {
+        return itemService.listAll();
     }
 
     @GetMapping("/get/")
-    public String getItem(@Param("id") Long id) throws JsonProcessingException {
-        Item item = itemService.get(id);
-        ObjectMapper mapper = new ObjectMapper();
-        String itemStr= mapper.writeValueAsString(item);
-        return itemStr;
+    public Item getItem(@Param("id") Long id) {
+        return itemService.get(id);
     }
 
     @DeleteMapping("/del/")
-    public boolean deleteAd( @Param("id") Long id) {
+    public boolean deleteAd(@Param("id") Long id) {
         itemService.delete(id);
         return true;
     }
@@ -44,9 +38,7 @@ public class ItemController {
     }
 
     @GetMapping("/upd/")
-    public void updItemById(String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Item item = mapper.readValue(json,Item.class);
+    public void updItemById(Item item) throws JsonProcessingException {
         itemService.save(item);
     }
 

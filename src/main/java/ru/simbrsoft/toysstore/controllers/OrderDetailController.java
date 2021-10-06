@@ -17,23 +17,17 @@ public class OrderDetailController {
     private OrderDetailService orderDetailService;
 
     @GetMapping("")
-    public String getAds() throws JsonProcessingException {
-        List<OrderDetail> listOrderDetails = orderDetailService.listAll();
-        ObjectMapper mapper = new ObjectMapper();
-        String orderDetails = mapper.writeValueAsString(listOrderDetails);
-        return orderDetails;
+    public List<OrderDetail> getOrderDetails() throws JsonProcessingException {
+        return orderDetailService.listAll();
     }
 
     @GetMapping("/get/")
-    public String getOrderDetail(@Param("id") Long id) throws JsonProcessingException {
-        OrderDetail orderDetail = orderDetailService.get(id);
-        ObjectMapper mapper = new ObjectMapper();
-        String orderDetailStr= mapper.writeValueAsString(orderDetail);
-        return orderDetailStr;
+    public OrderDetail getOrderDetail(@Param("id") Long id) throws JsonProcessingException {
+        return orderDetailService.get(id);
     }
 
     @DeleteMapping("/del/")
-    public boolean deleteAd( @Param("id") Long id) {
+    public boolean deleteAd(@Param("id") Long id) {
         orderDetailService.delete(id);
         return true;
     }
@@ -44,9 +38,7 @@ public class OrderDetailController {
     }
 
     @GetMapping("/upd/")
-    public void updOrderDetailById(String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        OrderDetail orderDetail = mapper.readValue(json,OrderDetail.class);
+    public void updOrderDetailById(OrderDetail orderDetail) throws JsonProcessingException {
         orderDetailService.save(orderDetail);
     }
 
