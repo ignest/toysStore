@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: ignest
+      changes:
+        - createTable:
+                  columns:
+                    - column:
+                        constraints:
+                          nullable: false
+                          primaryKey: true
+                          primaryKeyName: item_pkey
+                        name: id
+                        type: BIGINT
+                    - column:
+                        constraints:
+                          nullable: false
+                          foreignKeyName: fk_item_i_item_category
+                          references: item_category(id)
+                        name: category_id
+                        type: VARCHAR(50)
+                    - column:
+                        name: price
+                        type: INTEGER
+                    - column:
+                        name: item_name
+                        type: BIGINT
+                    - column:
+                        name: description
+                        type: TEXT
+                  tableName: item
+        - createSequence:
+                  cacheSize: 1
+                  cycle: false
+                  dataType: bigint
+                  incrementBy: 1
+                  maxValue: 9223372036854775807
+                  minValue: 1
+                  sequenceName: item_sq
+                  startValue: 3
